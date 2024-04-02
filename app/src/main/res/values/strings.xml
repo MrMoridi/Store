@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">snappFood</string>
+    <string name="price_format">$%s</string>
+</resources>

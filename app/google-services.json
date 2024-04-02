@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158227161688",
+    "project_id": "snappfood-e49e3",
+    "storage_bucket": "snappfood-e49e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158227161688:android:6a2117a85a6c07a9e8a02d",
+        "android_client_info": {
+          "package_name": "com.example.snappfood"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf0g74iSoh9jdOC2mJpMXrcDSjyy_I5-A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
