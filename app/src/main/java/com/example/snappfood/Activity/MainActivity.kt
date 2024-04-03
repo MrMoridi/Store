@@ -8,6 +8,8 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.snappfood.Adapter.BestFoodAdapter
+import com.example.snappfood.Adapter.CategoryAdapter
+import com.example.snappfood.Domain.Category
 import com.example.snappfood.Domain.Foods
 import com.example.snappfood.Domain.Location
 import com.example.snappfood.Domain.Price
@@ -32,9 +34,35 @@ class MainActivity : BaseActivity() {
         initTime()
         initPrice()
         initBestFood()
+        initCategory()
 
     }
 
+    private fun initCategory() {
+        val databaseReference = database.getReference("Category")
+        binding.progressBarCategory.visibility = View.VISIBLE
+
+        val list = ArrayList<Category>()
+        val query = databaseReference.orderByChild("BestFood").equalTo(true)
+        query.get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                for (dataSnapshot in snapshot.children) {
+                    list.add(dataSnapshot.getValue(Category::class.java)!!) // Use !! for non-null assertion
+                }
+                if (list.isNotEmpty()) {
+                    binding.categoryView.layoutManager = LinearLayoutManager(
+                        this@MainActivity,
+                        LinearLayoutManager.HORIZONTAL,
+                        false
+                    )
+                    binding.categoryView.adapter = CategoryAdapter(list)
+                }
+            }
+            binding.progressBarCategory.visibility = View.GONE
+        }.addOnFailureListener { error ->
+            // Handle database errors here
+        }
+    }
     private fun initBestFood() {
         val databaseReference = database.getReference("Foods")
         binding.progressBarBestFood.visibility = View.VISIBLE
@@ -61,9 +89,8 @@ class MainActivity : BaseActivity() {
             // Handle database errors here
         }
     }
-
     private fun initLocation() {
-        var myRef: DatabaseReference = database.getReference("Location")
+        val myRef: DatabaseReference = database.getReference("Location")
         val list: ArrayList<Location> = ArrayList()
 
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -91,7 +118,6 @@ class MainActivity : BaseActivity() {
             }
         })
     }
-
     private fun initTime() {
         val myRef: DatabaseReference = database.getReference("Time")
         val timeList: MutableList<Time> = mutableListOf()
@@ -120,7 +146,6 @@ class MainActivity : BaseActivity() {
             }
         })
     }
-
     private fun initPrice() {
         val myRef: DatabaseReference = database.getReference("Price")
         val priceList: MutableList<Price> = mutableListOf()
